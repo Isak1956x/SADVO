@@ -1,0 +1,77 @@
+﻿@using SADVO.Core.Application.ViewModels
+
+@model List<DirigentePoliticoViewModel>;
+@{
+    ViewData["Title"] = "User Index";
+    Layout = "_layoutAdmin";
+    var eleccionActiva = ViewBag.EleccionActiva;
+}
+
+
+<div class="container mt-4">
+    <h2 class="text-center">Asignacion de Relaciones</h2>
+    @if (eleccionActiva)
+    {
+        <div class="alert alert-warning text-center">
+            ⚠️ No se permite crear ni editar mientras haya una elección activa.
+        </div>
+
+
+        <div class="text-end mb-3">
+            <button class="btn btn-primary" disabled>Crear Relacion</button>
+        </div>
+    }
+    else
+    {
+        <div class="text-end mb-3">
+            <a class="btn btn-primary" asp-controller="AsignacionDirigente" asp-action="Create">Crear Relacion</a>
+        </div>
+    }
+    @if (Model.Count == 0)
+    {
+        <div class="text-center">
+            <h5 class="display-4">No Hay Partidos Creados</h5>
+        </div>
+    }
+    else
+    {
+
+ 
+      
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre Usuario</th>
+                        <th>Siglas Partido</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            <tbody >
+             
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                    <td>@item.Usuario.Nombre</td>
+                    <td>@item.PartidoPolitico.Siglas</td>
+                    <td class="text-center">
+                        @if(!eleccionActiva)
+                        {
+                                <a class="btn btn-outline-danger btn-sm float-end" asp-controller="AsignacionDirigente" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Eliminar</a>
+                        }
+                        else
+                        {
+                                    <button class="btn btn-outline-danger btn-sm float-end" disabled><i class="bi bi-trash"></i>Eliminar</button>
+
+                        }
+
+                            </td>
+                </tr>
+                }
+            </tbody>
+            </table>
+		</div>
+    }
+</div>

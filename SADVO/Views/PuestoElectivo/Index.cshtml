@@ -1,0 +1,82 @@
+﻿@using SADVO.Core.Application.ViewModels
+
+@model List<PuestoElectivoViewModel>
+@{
+    ViewData["Title"] = "Puesto Electivo Index";
+    Layout = "_LayoutAdmin";
+    bool isElectionActive = ViewBag.EleccionActiva;
+}
+
+
+<div class="container mt-4">
+    <h2 class="text-center">Mantenimiento de Puestos Electivos</h2>
+    @if(!isElectionActive)
+    {
+        
+        <div class="text-end mb-3">
+            <a class="btn btn-primary" asp-controller="PuestoElectivo" asp-action="Create">Crear Puesto Electivo</a>
+        </div>
+    }
+    else{
+        <div class="alert alert-warning text-center">
+            ⚠️ No se permite crear ni editar mientras haya una elección activa.
+        </div>
+
+        <div class="text-end mb-3">
+            <button class="btn btn-primary" disabled>Crear Puesto Electivo</button>
+        </div>
+    }
+
+    
+    @if (Model.Count == 0)
+    {
+        <div class="text-center">
+            <h5 class="display-4">No Hay Puestos Electivos Creados</h5>
+        </div>
+    }
+    else
+    {
+
+        
+
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-usuarios">
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>@item.Descripcion</td>
+                        <td><span class="badge bg-@(item.EstaActivo ? "success" : "danger")">@(item.EstaActivo ? "Activo" : "Inactivo")</span></td>
+                        <td class="text-center">
+                            @if (!isElectionActive)
+                            {
+                                <a class="btn btn-outline-danger btn-sm float-end" title="delete" asp-asp-controller="PuestoElectivo" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Eliminar</a>
+                                <a class="btn btn-outline-warning btn-sm float-end  me-2" title="Edit" asp-asp-controller="PuestoElectivo" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Editar</a>
+                                <a class="btn btn-outline-@(item.EstaActivo ? "danger" : "success") btn-sm float-end  me-2" title="UpdateStatus" asp-asp-controller="UpdateStatus" asp-action="UpdateStatus" asp-route-id="@item.Id"><i class="@(item.EstaActivo ? "bi bi-eye-slash-fill" : "bi bi-eye-fill")"></i>@(item.EstaActivo ? "Desactivar" : "Activar")</a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-outline-secondary btn-sm float-end" disabled><i class="bi bi-trash"></i>Eliminar</button>
+                                <button class="btn btn-outline-secondary btn-sm float-end  me-2" disabled><i class="bi bi-pencil-square"></i>Editar</button>
+                                <button class="btn btn-outline-secondary btn-sm float-end  me-2" disabled><i class="@(item.EstaActivo ? "bi bi-eye-slash-fill" : "bi bi-eye-fill")"></i>@(item.EstaActivo ? "Desactivar" : "Activar")</button>
+
+                            }
+                        </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    }
+</div>
+

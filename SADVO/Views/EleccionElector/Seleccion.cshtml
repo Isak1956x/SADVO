@@ -1,0 +1,62 @@
+﻿@using SADVO.Core.Application.ViewModels
+@model SaveVotoViewModel
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Seleccione un Candidato</h2>
+
+    <form asp-action="Votar" method="post">
+        <input asp-for="PuestoElectivoId" hidden />
+        <input asp-for="EleccionId" hidden />
+    
+
+        <div class="row">
+            @foreach(var candidato in Model.Candidatos)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@candidato.FotoUrl" class="card-img-top img-fluid" >
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@candidato.Nombre @candidato.Apellido</h5>
+                            <p class="mb-2">
+                                <img src="@candidato.PartidoPolitico.LogoUrl"  style="height: 40px;" />
+                                <br />
+                                <small class="text-muted">@candidato.PartidoPolitico.Nombre</small>
+                            </p>
+                            <div class="form-check d-flex justify-content-center">
+                                <input class="form-check-input" value="@candidato.Id"  type="radio" asp-for="CandidatoId">
+                                <label class="form-check-label ms-2" for="candidato-@candidato.Votos">
+                                    Seleccionar
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                    <img src="https://us.123rf.com/450wm/archivector/archivector1905/archivector190500060/129010848-hombres-de-avatar-de-signo-abstracto-perfil-masculino-de-icono-símbolo-blanco-sobre-fondo-de.jpg?ver=6l" class="card-img-top img-fluid">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ninguno</h5>
+                    <p class="mb-2">
+                            <img src="https://media.istockphoto.com/id/1151657492/es/vector/s%C3%ADmbolo-de-prohibici%C3%B3n-de-rojo-vectorial-sin-s%C3%ADmbolos-aislados-sobre-fondo-blanco.jpg?s=612x612&w=0&k=20&c=u5nBXJ9hFbPn2W__5jI7lVuOA5UVaRuCMxYRVRC_5Bc=" style="height: 40px;" />
+                        <br />
+                        <small class="text-muted">Ninguno</small>
+                    </p>
+                    <div class="form-check d-flex justify-content-center">
+                        <input class="form-check-input" value="0" type="radio" asp-for="CandidatoId">
+                        <label class="form-check-label ms-2">
+                            Seleccionar
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg px-5">Votar</button>
+        </div>
+    </form>
+</div>

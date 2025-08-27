@@ -1,0 +1,25 @@
+﻿@using SADVO.Core.Application.ViewModels
+@model CambiarEstadoViewModel;
+@{
+	
+	ViewData["Title"] = "Finalizar Elección";
+}
+
+<div class="col-12 col-md-6 offset-md-3">
+	<div class="card">
+		<div class="card-header bg-danger text-light">
+			<h4 class="text-center">@($" “¿Está seguro que desea finalizar la eleccion {Model.Nombre}?")</h4>
+		</div>
+		<div class="card-body">
+			<form asp-controller="Elecciones" asp-action="UpdateStatus" method="POST">
+				<input type="hidden" asp-for="Id" />
+				<input type="hidden" asp-for="EstaActivo" />
+			
+				<div class="mb-3 text-center">
+					<button type="submit" class="btn btn-outline-danger ">Actualizar</button>
+					<a asp-controller="Elecciones" asp-action="index" class="btn btn-outline-warning ">Cancelar</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

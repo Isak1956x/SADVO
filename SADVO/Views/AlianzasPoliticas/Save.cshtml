@@ -1,0 +1,35 @@
+﻿@using SADVO.Core.Application.ViewModels;
+@model SaveAlianzaPoliticaViewModel; 
+ @{       
+     	ViewData["Title"] = "Nueva Alianza";     
+	Layout = "_LayoutDirigente";
+     }     
+
+<div class="col-12 col-md-6 offset-md-3 ">
+    <div class="card">
+        <div class="card-header bg-success text-light"><h5 class="text-center">Nueva Alianza</h5></div>
+        <div class="card-body">
+            <form asp-controller="AlianzasPoliticas" asp-action="Create" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+					<input type="hidden" asp-for="PartidoSolicitanteId" />
+					<input type="hidden" asp-for="Estado" />
+                    <label asp-for="PartidoDestinoId" class="form-label">Partido Destino:</label>
+                    <select class="form-select" asp-for="PartidoDestinoId">
+                        <option value="0">Seleccione un Partido</option>
+                        @foreach (var item in ViewBag.Partidos)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        })
+                    </select>
+                        <span asp-validation-for="PartidoDestinoId" class="text-danger"></span>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-outline-primary float-end"><i class="bi bi-floppy2"></i> Guardar</button>
+                    <a asp-controller="AlianzasPoliticas" asp-action="Index" class="btn btn-outline-warning float-end me-2"><i class="bi bi-arrow-left-short"></i> Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,78 @@
+﻿@using SADVO.Core.Application.ViewModels
+
+@model List<CiudadanoViewModel>;
+@{
+    ViewData["Title"] = "Ciudadano Index";
+    Layout = "_LayoutAdmin";
+    var isElectionActive = ViewBag.EleccionActiva;
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Mantenimiento de Ciudadanos</h2>
+    @if (isElectionActive)
+    {
+        <div class="alert alert-warning text-center">
+            ⚠️ No se permite crear ni editar mientras haya una elección activa.
+        </div>
+
+        <div class="text-end mb-3">
+            <button class="btn btn-secondary" disabled>Crear Ciudadano</button>
+        </div>
+    }
+    else
+    {
+        <div class="text-end mb-3">
+            <a class="btn btn-primary" asp-controller="Ciudadano" asp-action="Create">Crear Ciudadano</a>
+        </div>
+    }
+    
+    @if (Model.Count == 0)
+    {
+        <div class="text-center">
+            <h5 class="display-4">No Hay Ciudadanos Creados</h5>
+        </div>
+    }
+    else
+    {
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Cedula</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-usuarios">
+           
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>@item.Apellido</td>
+                        <td>@item.Email</td>
+                        <td>@item.DocumentoIdentidad</td>
+                        <td><span class="badge bg-@(item.EstaActivo ? "success" : "danger")">@(item.EstaActivo ? "Activo" : "Inactivo")</span></td>
+                        <td class="text-center">
+                            @if (!isElectionActive)
+                            {
+                                <a class="btn btn-outline-warning btn-sm float-end  me-2" title="Edit" asp-asp-controller="Candidato" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Editar</a>
+                                <a class="btn btn-outline-@(item.EstaActivo ? "danger" : "success") btn-sm float-end  me-2" title="UpdateStatus" asp-asp-controller="Candidato" asp-action="UpdateStatus" asp-route-id="@item.Id"><i class="@(item.EstaActivo ? "bi bi-eye-slash-fill" : "bi bi-eye-fill")"></i>@(item.EstaActivo ? "Desactivar" : "Activar")</a>
+                            }
+                            else
+                            {
+
+                                <button class="btn btn-outline-secondary btn-sm float-end me-2" disabled><i class="bi bi-pencil-square"></i>Editar</button>
+                                <button class="btn btn-outline-secondary btn-sm float-end me-2" disabled><i class="@(item.EstaActivo ? "bi bi-eye-slash-fill" : "bi bi-eye-fill")"></i>@(item.EstaActivo ? "Desactivar" : "Activar")</button>
+                            }
+                        </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    }
+</div>

@@ -1,0 +1,68 @@
+﻿@using SADVO.Core.Application.ViewModels
+
+@model List<EleccionViewModel>;
+@{
+    ViewData["Title"] = "Elecciones Index";
+    Layout = "_LayoutAdmin";
+    var isElectionActive = ViewBag.EleccionActiva;
+}
+
+
+<div class="container mt-4">
+    <h2 class="text-center">Mantenimiento de Elecciones</h2>
+ 
+    @if (isElectionActive)
+    {
+        <div class="alert alert-warning text-center">
+            ⚠️ No se permite crear ni editar mientras haya una elección activa.
+        </div>
+        <div class="text-end mb-3">
+            <button class="btn btn-secondary" disable>Crear Eleccion</button>
+        </div>
+    }
+    else
+    {
+        <div class="text-end mb-3">
+            <a class="btn btn-primary" asp-controller="Elecciones" asp-action="Create">Crear Eleccion</a>
+        </div>
+    }
+    @if (Model.Count == 0)
+    {
+        <div class="text-center">
+            <h5 class="display-4">No Hay Elecciones Creadas</h5>
+        </div>
+    }
+    else
+    {
+     
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Nombre</th>
+					<th>Fecha de Realizacion</th>
+					<th>Cantidad de Partidos</th>
+					<th>Cantidad de Puestos</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-usuarios">
+              
+
+                @foreach (var item in Model)
+                {
+                    <tr class="@(item.EstaFinalizada ? "bg-success" : "")">
+                        <td class="text-center">@item.Nombre</td>
+                        <td class="text-center">@item.Fecha.ToString("dd/MM/yyyy")</td>
+                    <td>""</td>
+                    <td>""</td>
+                    <td><span class="badge bg-@(item.EstaFinalizada ? "success" : "danger")">@(item.EstaFinalizada ? "Finalizada" : "En Proceso")</span></td>
+                    <td class="text-center">
+                            <a class="btn btn-outline-@(item.EstaFinalizada ? "danger" : "success") btn-sm float-end  me-2"  asp-asp-controller="Elecciones" asp-action="@(item.EstaFinalizada ? "Resultados" : "UpdateStatus")" asp-route-id="@item.Id"><i class="@(item.EstaFinalizada ? "bi bi-bar-chart-line-fill" : "bi bi-check2-square")"></i>@(item.EstaFinalizada ? "Ver Resultados" : "Finalizar")</a>
+                    </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    }
+</div>

@@ -1,0 +1,27 @@
+﻿@using SADVO.Core.Application.ViewModels
+@model ValidacionCiudadanoViewModel
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Validación de Identidad</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" asp-action="ValidarIdentidad" asp-controller="Home" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <input asp-for="Cedula" hidden/>
+                    <label asp-for="CedulaFile" class="form-label">Suba una imagen de su cédula (frontal)</label>
+                    <input class="form-control" asp-for="CedulaFile">
+					<span asp-validation-for="CedulaFile" class="text-danger"></span>
+                </div>
+
+                <div class="alert alert-secondary">
+                    La imagen debe ser clara, de buena calidad y mostrar solo la parte frontal de la cédula.
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Enviar Foto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

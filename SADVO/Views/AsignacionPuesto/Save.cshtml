@@ -1,0 +1,45 @@
+﻿@using SADVO.Core.Application.ViewModels;
+@model SaveAsignacionPuestoViewModel; 
+ @{     
+     	bool editMode = ViewBag.EditMode ?? false;     
+     	ViewData["Title"] = "Nueva Relacion";     
+	Layout = "_LayoutDirigente";
+     }     
+
+<div class="col-12 col-md-6 offset-md-3 ">
+    <div class="card">
+        <div class="card-header bg-success text-light"><h5 class="text-center">@(editMode ? "Editar - " : "Nueva Relacion")</h5></div>
+        <div class="card-body">
+            <form asp-controller="AsignacionPuesto" asp-action="@(editMode ? "Edit" : "Create")" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for="CandidatoId" class="form-label">Candidato:</label>
+                    <select class="form-select" asp-for="CandidatoId">
+                        <option value="">Seleccione un Candidato</option>
+                        @foreach (var item in ViewBag.Candidatos)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        })
+                    </select>
+                        <span asp-validation-for="CandidatoId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PuestoElectivoId" class="form-label">Puesto:</label>
+                    <select class="form-select" asp-for="PuestoElectivoId">
+						<option value="">Seleccione un partido</option>
+						@foreach (var item in ViewBag.PuestoElectivo)
+						{
+							<option value="@item.Id">@item.Nombre</option>
+						})
+					</select>
+                    <span asp-validation-for="PartidoPoliticoId" class="text-danger"></span>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-outline-primary float-end"><i class="bi bi-floppy2"></i> Guardar</button>
+                    <a asp-controller="AsignacionPuesto" asp-action="Index" class="btn btn-outline-warning float-end me-2"><i class="bi bi-arrow-left-short"></i> Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

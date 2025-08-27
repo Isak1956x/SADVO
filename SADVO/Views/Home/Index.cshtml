@@ -1,0 +1,28 @@
+﻿@using SADVO.Core.Application.ViewModels
+@model validacionCedulaViewModel
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Sistema de Votación</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="get" asp-action="ValidarIdentidad" asp-controller="Home">
+                <div class="mb-3">
+                    <label asp-for="Cedula" class="form-label">Número de Documento de Identidad</label>
+                    <input asp-for="Cedula" class="form-control" placeholder="Ej: 00112345678">
+                    <span asp-validation-for="Cedula" class="text-danger"></span>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Votar</button>
+                </div>
+            </form>
+
+
+            @if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-info text-center mt-4">
+                    @ViewBag.Mensaje
+                </div>
+            }
+        </div>
+    </div>
+</div>

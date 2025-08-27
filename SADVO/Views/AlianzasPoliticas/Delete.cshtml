@@ -1,0 +1,25 @@
+﻿@using SADVO.Core.Application.ViewModels
+@model DeleteAlianzaViewModel;
+@{
+	
+	ViewData["Title"] = "Eliminar Alianza";
+}
+
+<div class="col-12 col-md-6 offset-md-3">
+	<div class="card">
+		<div class="card-header bg-danger text-light">
+			<h4 class="text-center">
+				@($"¿Está seguro que desea eliminar la Alianza {Model.Nombre} {Model.Siglas} de este partido ?")</h4>
+		</div>
+		<div class="card-body">
+			<form asp-controller="AlianzasPoliticas" asp-action="Delete" method="POST">
+				<input type="hidden" asp-for="Id" />
+			
+				<div class="mb-3 text-center">
+					<button type="submit" class="btn btn-outline-danger ">Eliminar</button>
+					<a asp-controller="AlianzasPoliticas" asp-action="Index" class="btn btn-outline-warning ">Cancelar</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+﻿@using SADVO.Core.Application.ViewModels
+@using SADVO.Core.Application.Interfaces
+@using SADVO.Core.Domain.Enums
+@inject IUserSession userSession;
+@{
+    UserViewModel? User = userSession.GetUserSession();
+}
+
+@{
+    ViewData["Title"] = "Access denied";
+    bool isAdmin = true;
+
+    if (User?.Rol == (int)Role.Dirigente)
+    {
+        isAdmin = false;
+        Layout = "_LayoutDirigente";
+    }
+    
+}
+
+<div class="text-center">
+    <h1 class="display-4">Access denied</h1>
+    <p> Your user does not have permission to access this section - <a asp-controller="@(isAdmin ? "AdminHome" : "Home")" asp-action="Index"><i class="bi bi-house-door"></i> Home</a> </p>
+</div>

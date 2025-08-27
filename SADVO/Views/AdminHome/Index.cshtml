@@ -1,0 +1,69 @@
+﻿@using SADVO.Core.Application.ViewModels
+@{
+    ViewData["Title"] = "Home Page";
+	Layout = "_LayoutAdmin";
+}
+@model AdminHomeViewModel;
+
+@{
+    ViewData["Title"] = "Home Administrador";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Panel del Administrador</h2>
+
+
+
+    <form asp-action="Index" asp-controller ="AdminHome" method="get" class="row g-3 align-items-center mb-4">
+        <div class="col-auto">
+            <label asp-for = "Años" class="form-label">Seleccione un año:</label>
+            <select class="form-select" name="anio">
+				@foreach (var anio in Model.Años)
+                {
+                    if(anio == Model.añoSelecionado)
+                    {
+
+                    <option value="@anio" selected>@anio</option>
+                    }
+                    else{
+                        <option value="@anio" selected>@anio</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-auto mt-4">
+            <button type="submit" class="btn btn-primary">Obtener Resumen Electoral</button>
+        </div>
+    </form>
+
+
+    @if (Model.Elecciones != null)
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre de la Elección</th>
+                    <th>Partidos que Participaron</th>
+                    <th>Candidatos que Participaron</th>
+                    <th>Total de Votos Emitidos</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var eleccion in Model.Elecciones)
+                {
+                    <tr>
+                        <td>@eleccion.Nombre</td>
+                        <td>""</td>
+                        <td>""</td>
+                        <td>""</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (Model.añoSelecionado != 0)
+    {
+        <div class="alert alert-info text-center">No hay elecciones registradas para el año @Model.añoSelecionado</div>
+    }
+</div>
+

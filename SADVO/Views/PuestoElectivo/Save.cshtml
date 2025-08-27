@@ -1,0 +1,33 @@
+﻿@using SADVO.Core.Application.ViewModels;
+@model SavePuestoElectivoViewModel; 
+ @{     
+     	bool editMode = ViewBag.EditMode ?? false;     
+     	ViewData["Title"] = "Nuevo Puesto Electivo";     
+     }     
+
+     <div class="col-12 col-md-6 offset-md-3">     
+     	<div class="card">     
+     			<div class="card-header bg-success text-light">     
+     			<h5 class="text-center">@(editMode ? "Editar - " + Model.Nombre: "Nuevo Puesto Electivo")</h5>     
+     			</div>     
+     		<div class="card-body">     
+     			<form asp-controller="PuestoElectivo" asp-action="@(editMode ? "Edit" : "Create")" method="POST">     
+     					<input type="hidden" asp-for="Id" />     
+     				<div class="mb-3">     
+     					<label asp-for="Nombre" class="form-label">Nombre:</label>     
+     					<input asp-for="Nombre" class="form-control" />     
+     					<span asp-validation-for="Nombre" class="text-danger"></span>     
+     				</div>     
+     				<div class="mb-3">
+                    <label asp-for="Descripcion" class="form-label">Descripcion:</label>
+                    <input asp-for="Descripcion" class="form-control" step="any" />     
+     					<span asp-validation-for="Descripcion" class="text-danger"></span>     
+     				</div>	         
+     				<div class="mb-3">     
+     					<button type="submit" class="btn btn-outline-primary float-end">Guardar</button>     
+     					<a asp-controller="PuestoElectivo" asp-action="index" class="btn btn-outline-warning float-end me-2">Cancelar</a>     
+     				</div>     
+     			</form>     
+     		</div>     
+     	</div>    
+     </div> 

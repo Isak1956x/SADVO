@@ -1,0 +1,52 @@
+﻿@using SADVO.Core.Application.ViewModels
+@model List<PuestoElectivoViewModel>
+
+@{
+    ViewData["Title"] = "Elección de Puestos Disponibles";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Seleccione un Puesto para Votar</h2>
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger text-center">@TempData["Error"]</div>
+    }
+    <div class="row">
+        @foreach (var puesto in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow @(puesto.YaVotado ? "border-success" : "border-primary")">
+                    <div class="card-body">
+                        <h5 class="card-title">@puesto.Nombre</h5>
+                        <p class="card-text">
+                            <strong>Partidos:</strong> @puesto.Asignaciones.Select(a => a.PartidoPoliticoId).Distinct().Count() <br />
+                            <strong>Candidatos:</strong> @puesto.Asignaciones.Select(a => a.CandidatoId).Distinct().Count()
+                        </p>
+
+                        @if (puesto.YaVotado)
+                        {
+                            <button class="btn btn-success w-100" disabled>
+                                Ya ha votado <i class="bi bi-check-circle ms-1"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <a asp-action="Seleccion" asp-controller="EleccionElector" asp-route-id="@puesto.Id" class="btn btn-primary w-100">
+                                Ver Candidatos
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+         
+        }
+      
+            <form asp-action="FinalizarVotacion" asp-controller="EleccionElector" method="post">
+                <button type="submit" class="btn btn-success w-100 mt-4">
+                    Finalizar Votación
+                </button>
+            </form>
+        
+     
+    </div>
+</div>

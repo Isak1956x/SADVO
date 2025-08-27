@@ -1,0 +1,45 @@
+﻿@using SADVO.Core.Application.ViewModels;
+@model SaveDirigentePoliticoViewModel; 
+ @{     
+     	bool editMode = ViewBag.EditMode ?? false;     
+     	ViewData["Title"] = "Nuevo Partido";     
+	Layout = "_LayoutAdmin";
+     }     
+
+<div class="col-12 col-md-6 offset-md-3 ">
+    <div class="card">
+        <div class="card-header bg-success text-light"><h5 class="text-center">@(editMode ? "Editar - " : "Nueva Relacion")</h5></div>
+        <div class="card-body">
+            <form asp-controller="AsignacionDirigente" asp-action="@(editMode ? "Edit" : "Create")" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for="UsuarioId" class="form-label">Dirigente:</label>
+                    <select class="form-select" asp-for="UsuarioId">
+                        <option value="">Seleccione un Usuario</option>
+                        @foreach (var item in ViewBag.Usuarios)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        })
+                    </select>
+                        <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PartidoPoliticoId" class="form-label">Partido:</label>
+                    <select class="form-select" asp-for="PartidoPoliticoId">
+						<option value="">Seleccione un partido</option>
+						@foreach (var item in ViewBag.Partidos)
+						{
+							<option value="@item.Id">@item.Siglas</option>
+						})
+					</select>
+                    <span asp-validation-for="PartidoPoliticoId" class="text-danger"></span>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-outline-primary float-end"><i class="bi bi-floppy2"></i> Guardar</button>
+                    <a asp-controller="AsignacionDirigente" asp-action="Index" class="btn btn-outline-warning float-end me-2"><i class="bi bi-arrow-left-short"></i> Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,25 @@
+﻿@using SADVO.Core.Application.ViewModels
+@model CambiarEstadoAlianzaViewModel;
+@{
+	
+	ViewData["Title"] = Model.Estado == 2 ? "Rechazar Alianza Política" : "Aceptar Alianza Política";
+}
+
+<div class="col-12 col-md-6 offset-md-3">
+	<div class="card">
+		<div class="card-header bg-danger text-light">
+			<h4 class="text-center">@($"¿Está seguro que desea {(Model.Estado == 2  ? "Rechazar" : "Aceptar")} la alianza con el partido {Model.Nombre} y sus Siglas {Model.Siglas}?")</h4>
+		</div>
+		<div class="card-body">
+			<form asp-controller="AlianzasPoliticas" asp-action="UpdateStatus" method="POST">
+				<input type="hidden" asp-for="Id" />
+				<input type="hidden" asp-for="Estado" />
+			
+				<div class="mb-3 text-center">
+					<button type="submit" class="btn btn-outline-danger ">Aceptar</button>
+					<a asp-controller="AlianzasPoliticas" asp-action="index" class="btn btn-outline-warning ">Cancelar</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
